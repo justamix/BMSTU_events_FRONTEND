@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+:root {
+  --root-bg: #F0EFEF;
+  --text-color: #000;
+  --primary-color: #009FE3;
+  --primary-color__hover: hsl(from var(--primary-color) h s calc(l - 10));
+
+  --header-bg: #fff;
+  --header-color: #2E2E36;
+
+  --card-bg: #fff;
+  --card-border-color: #ced4da;
+  --card-text: #000;
+
+  --primary-btn-bg: var(--primary-color);
+  --primary-btn-bg--hover: var(--primary-color__hover);
+  --primary-btn-border: var(--primary-color);
+  --primary-btn-border--hover: var(--primary-color__hover);
+  --primary-btn-color: #fff;
+  --primary-btn-color--hover: #fff;
+
+  --search-bg: var(--primary-color);
+  --search-bg--hover: var(--primary-color__hover);
+  --search-border: var(--primary-color);
+  --search-border--hover: var(--primary-color__hover);
+  --search-color: #fff;
+  --search-color--hover: #fff;
+}
+
+.wrapper {
+  color: var(--text-color);
+  background-color: var(--root-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #F0EFEF; /* Это для резерва */
+}

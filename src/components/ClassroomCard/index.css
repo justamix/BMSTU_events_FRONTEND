@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+.card-custom {
+    width: 300px;
+    margin: 0 auto 50px;
+    height: 400px;
+    background-color: #D9D9D9 !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+.card-img-wrapper {
+    padding: 20px; /* Внутренний отступ вокруг изображения */
+    overflow: hidden; /* Обрезает изображение по границам контейнера */
+}
+
+.card-img-custom {
+    width: 100%; /* Изображение займет всю ширину контейнера */
+    border-radius: 20px !important;
+    height: 200px; /* Высота изображения */
+    object-fit: cover; /* Масштабирует изображение, чтобы оно соответствовало контейнеру */
+}
+
+.card-title-custom {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.25rem;
+    color: #000000 !important;
+}
+
+.card-text-custom {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    color: #000000 !important;
+}
+
+.button-custom {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    background-color: #D9D9D9 !important;
+    font-size: 1.5rem !important;   
+    color: #000000 !important;
+    border: #000000;
+    border-radius: 15px !important;
+}
