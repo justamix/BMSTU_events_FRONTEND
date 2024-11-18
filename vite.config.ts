@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  base: '/FRONTEND/', // Убедитесь, что здесь имя вашего репозитория
+  base: '/my-app', // Убедитесь, что здесь имя вашего репозитория
   server: {
     host: true,
     port: 3000,

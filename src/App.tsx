@@ -37,7 +37,7 @@ function App() {
                     <Breadcrumbs currentClassroom={currentClassroom} />
                 </Row>
                 <Row>
-                    <BrowserRouter basename="/FRONTEND">
+                    <BrowserRouter basename="/my-app">
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/classrooms/" element={<ClassroomsPage classrooms={classrooms} setClassrooms={setClassrooms} isMock={isMock} setIsMock={setIsMock} classroomName={ClassroomName} setClassroomName={setClassroomName}/>} />
