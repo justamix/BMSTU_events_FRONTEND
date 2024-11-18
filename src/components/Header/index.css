@@ -5,7 +5,7 @@
     color: #000000; /* Черный текст */
     padding: 0.5rem 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень */
-    position: sticky; /* Фиксируем header */
+    position: sticky !important; /* Фиксируем header */
     top: 0; /* Фиксация в верхней части экрана */
     z-index: 10; /* Поверх всего остального содержимого */
 }
