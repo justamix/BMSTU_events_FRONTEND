@@ -1,23 +1,38 @@
 .carousel-image {
     width: 100%;
-    height: 500px; /* Фиксированная высота для всех изображений */
-    object-fit: cover; /* Сохранение пропорций и обрезка изображения по размеру контейнера */
+    height: 500px; 
+    object-fit: cover; 
 }
 
 .carousel-caption {
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для текста */
-    color: #fff; /* Белый цвет текста */
+    background: rgba(0, 0, 0, 0.5); 
+    color: #fff; 
     padding: 10px;
-    bottom: 20px; /* Отступ от нижней границы */
-    text-align: center; /* Центрирование текста */
+    bottom: 20px; 
+    text-align: center; 
     font-size: 1.2em;
 }
 
 .carousel-caption h5 {
-    font-size: 1.5em; /* Увеличиваем заголовок */
+    font-size: 1.5em; 
     font-weight: bold;
 }
 
 .carousel-caption p {
     font-size: 1em;
+}
+@media (max-width: 768px){
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.5); 
+        color: #fff; 
+        padding: 10px;
+        bottom: 20px; 
+        text-align: center; 
+        font-size: 0.7em;
+    }
+    
+    .carousel-caption h5 {
+        font-size: 1.0em; 
+        font-weight: bold;
+    }
 }

@@ -51,8 +51,9 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock }: Classr
 
     return (
         <Container className="container-custom">
-            <Row className="justify-content-center mb-5"> {/* Центрируем ряд */}
-                <Col xs="12" md="8" lg="6"> {/* Центрируем содержимое и ограничиваем ширину */}
+            {/* Форма поиска */}
+            <Row className="justify-content-center mb-5">
+                <Col xs="12" md="8" lg="6">
                     <Form onSubmit={handleSubmit} className="d-flex">
                         <Input
                             value={classroomName}
@@ -66,9 +67,11 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock }: Classr
                     </Form>
                 </Col>
             </Row>
-            <Row>
+    
+            {/* Карточки */}
+            <Row className="card-grid">
                 {classrooms?.map((classroom) => (
-                    <Col key={classroom.classroom_id} xs="12" sm="6" md="4" className="classroom-card-col">
+                    <Col key={classroom.classroom_id} className="classroom-card-col">
                         <ClassroomCard classroom={classroom} isMock={isMock} />
                     </Col>
                 ))}

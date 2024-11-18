@@ -13,7 +13,7 @@
 .header-brand {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #006cdc !important; /* Синий брендовый цвет */
+    color: #006cdc !important;
 }
 
 .nav-link-custom {
@@ -24,7 +24,7 @@
 }
 
 .navbar .nav-link-custom:hover {
-    color: #006cdc !important; /* Цвет текста при наведении */
+    color: #006cdc !important;
     text-decoration: underline !important;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .header-logo {
-    height: 60px; /* Меньше высота логотипа для адаптивности */
+    height: 60px;
     width: auto;
     margin-right: 10px;
 }
@@ -41,15 +41,15 @@
 /* Адаптивные стили */
 @media (max-width: 768px) {
     .header-navbar {
-        padding: 0.5rem; /* Уменьшенный отступ для маленьких экранов */
+        padding: 0.5rem; 
     }
 
     .header-logo {
-        height: 40px; /* Логотип уменьшается еще больше на маленьких экранах */
+        height: 40px; 
     }
 
     .nav-link-custom {
-        font-size: 0.9rem; /* Уменьшенный размер текста в навигации */
+        font-size: 0.9rem; 
     }
 
     .header-brand {

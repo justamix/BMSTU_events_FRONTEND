@@ -1,32 +1,52 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+/* Общие стили для контейнера */
 .container-custom {
-    padding: 20px;
-    background-color: #F0EFEF;
+    margin-top: 20px;
+    padding: 0 15px;
 }
 
-.form-row {
-    margin-bottom: 30px;
+/* Адаптивный стиль для карточек */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Минимальная ширина карточки 280px */
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
 }
 
-.search-input {
-    font-family: "Montserrat", sans-serif;
-    padding: 10px;
-    font-size: 1.1rem;
-    border-radius: 20px !important;
-    height: 40px !important;
-    width: 80% !important;
-}
-
-.search-button {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 20px !important;
-    height: 40px !important;
-    width: 20% !important;
-}
-
+/* Карточки */
 .classroom-card-col {
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Поле поиска */
+.search-input {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Кнопка поиска */
+.search-button {
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+/* Адаптивность для формы поиска */
+@media (max-width: 768px) {
+    .search-input {
+        font-size: 14px;
+    }
+
+    .search-button {
+        font-size: 14px;
+    }
+}
+
+/* Отступы для мобильных устройств */
+@media (max-width: 576px) {
+    .container-custom {
+        padding: 0 10px;
+    }
 }
