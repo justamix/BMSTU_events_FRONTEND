@@ -3,7 +3,7 @@
     "short_name": "Tile Notes",
     "start_url": "/FRONTEND/",
     "display": "standalone",
-    "background_color": "#fdfdfd",
+    "background_color": "#ffffff",
     "theme_color": "#db4938",
     "orientation": "portrait-primary",
     "screenshots": [
