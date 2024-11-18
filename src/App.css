@@ -41,3 +41,19 @@ body {
   min-height: 100vh;
   background-color: #F0EFEF; /* Это для резерва */
 }
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 100px; /* Высота хедера (адаптируйте под ваш Header) */
+  padding: 16px; /* Отступы для контента */
+}

@@ -3,9 +3,13 @@ import { NavLink as RRNavLink } from "react-router-dom";
 import './index.css';
 import logo from "assets/logo.png"
 
-const Header = () => {
+type HeaderProps = {
+    className?: string; // Добавляем проп для className
+};
+
+const Header = ({ className }: HeaderProps) => {
     return (
-        <header>
+        <header className={className}>
             <Navbar className="p-3 header-navbar" expand="lg">
                 <Container>
                     <Row>

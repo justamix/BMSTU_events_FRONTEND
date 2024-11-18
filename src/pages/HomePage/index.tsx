@@ -1,21 +1,26 @@
 import { Container, Row, Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption } from "reactstrap";
 import { useState } from "react";
-import './index.css'; // Импортируем стили
+import './index.css'; 
+
+
 const items = [
     {
-        src: "http://127.0.0.1:9000/bmstulab/ekaterina.png", // Замените URL на актуальный
+        src: "http://127.0.0.1:9000/bmstulab/ekaterina.png",
         altText: "Первый технический университет в России",
-        caption: "Прообраз современного вуза, основан при Екатерине II"
+        caption: "Прообраз современного вуза, основан при Екатерине II",
+        fallbackSrc: "/FRONTEND/ekaterina.png"
     },
     {
-        src: "http://127.0.0.1:9000/bmstulab/mgtu.png", // Замените URL на актуальный
+        src: "http://127.0.0.1:9000/bmstulab/mgtu.png",
         altText: "Здание выдержано в стиле ампира",
-        caption: "Здание университета построено в стиле позднего московского ампира"
+        caption: "Здание университета построено в стиле позднего московского ампира",
+        fallbackSrc: "/FRONTEND/mgtu.png"
     },
     {
-        src: "http://127.0.0.1:9000/bmstulab/devs.png", // Замените URL на актуальный
+        src: "http://127.0.0.1:9000/bmstulab/devs.png",
         altText: "Инновации и технологии",
-        caption: "МГТУ им. Баумана — ведущий технический вуз в России, задающий тренды в науке и технологиях"
+        caption: "МГТУ им. Баумана — ведущий технический вуз в России, задающий тренды в науке и технологиях",
+        fallbackSrc: "/FRONTEND/devs.png"
     }
 ];
 
@@ -36,26 +41,34 @@ const HomePage = () => {
     };
 
     const goToIndex = (newIndex: number) => {
-		if (animating) return;
-		setActiveIndex(newIndex);
-	};
+        if (animating) return;
+        setActiveIndex(newIndex);
+    };
 
     const slides = items.map((item) => {
-		return (
-			<CarouselItem
-				onExiting={() => setAnimating(true)}
-				onExited={() => setAnimating(false)}
-				key={item.src}
-			>
-				<img src={item.src} alt={item.altText} className="carousel-image" />
-				<CarouselCaption 
-					captionHeader={item.altText}
-					captionText={item.caption} 
-					className="carousel-caption" 
-				/>
-			</CarouselItem>
-		);
-	});
+        const [imageSrc, setImageSrc] = useState(item.fallbackSrc);
+
+        return (
+            <CarouselItem
+                onExiting={() => setAnimating(true)}
+                onExited={() => setAnimating(false)}
+                key={item.src}
+            >
+                <img 
+                    src={imageSrc} 
+                    alt={item.altText} 
+                    className="carousel-image" 
+                    onError={() => setImageSrc(item.fallbackSrc)} 
+                />
+                <CarouselCaption 
+                    captionHeader={item.altText}
+                    captionText={item.caption} 
+                    className="carousel-caption" 
+                />
+            </CarouselItem>
+        );
+    });
+
     return (
         <Container>
             <Row>
@@ -68,6 +81,6 @@ const HomePage = () => {
             </Row>
         </Container>
     );
-}
+};
 
 export default HomePage;

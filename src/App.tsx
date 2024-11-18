@@ -16,19 +16,40 @@ function App() {
 
     return (
         <div className="wrapper">
-            <Header />
-            <Container className="pt-4">
-                <Row className="mb-3">
-                    <Breadcrumbs currentClassroom={currentClassroom} />
-                </Row>
-                <Row>
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/classrooms/" element={<ClassroomsPage classrooms={classrooms} setClassrooms={setClassrooms} isMock={isMock} setIsMock={setIsMock}/>} />
-                        <Route path="/classrooms/:id" element={<ClassroomPage selectedClassroom={currentClassroom} setSelectedClassroom={setSelectedClassroom} isMock={isMock} setIsMock={setIsMock}/>} />
-                    </Routes>
-                </Row>
-            </Container>
+            <Header className="header" />
+            <main className="main-content">
+                <Container className="pt-4">
+                    <Row className="mb-3">
+                        <Breadcrumbs currentClassroom={currentClassroom} />
+                    </Row>
+                    <Row>
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={<HomePage />}
+                            />
+                            <Route
+                                path="/classrooms/"
+                                element={<ClassroomsPage
+                                    classrooms={classrooms}
+                                    setClassrooms={setClassrooms}
+                                    isMock={isMock}
+                                    setIsMock={setIsMock}
+                                />}
+                            />
+                            <Route
+                                path="/classrooms/:id"
+                                element={<ClassroomPage
+                                    selectedClassroom={currentClassroom}
+                                    setSelectedClassroom={setSelectedClassroom}
+                                    isMock={isMock}
+                                    setIsMock={setIsMock}
+                                />}
+                            />
+                        </Routes>
+                    </Row>
+                </Container>
+            </main>
         </div>
     );
 }
