@@ -47,7 +47,7 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock }: Classr
 
     useEffect(() => {
         fetchData();
-    }, [classroomName]); // Перезапуск при изменении classroomName
+    }, []); 
 
     return (
         <Container className="container-custom">
