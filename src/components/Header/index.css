@@ -1,32 +1,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+
 .header-navbar {
-    background-color: #ffffff !important; /* Синий цвет фона */
-    color: #ffffff; /* Белый цвет текста */
+    background-color: #ffffff !important; /* Белый фон */
+    color: #000000; /* Черный текст */
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    position: sticky; /* Фиксируем header */
+    top: 0; /* Фиксация в верхней части экрана */
+    z-index: 10; /* Поверх всего остального содержимого */
 }
 
 .header-brand {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #ffffff !important;
+    color: #006cdc !important; /* Синий брендовый цвет */
 }
 
 .nav-link-custom {
     font-family: "Montserrat", sans-serif;
     color: #000000 !important;
     text-transform: capitalize;
+    transition: color 0.3s;
 }
 
 .navbar .nav-link-custom:hover {
-    color: #006cdc !important; /* Измените цвет текста при наведении */
+    color: #006cdc !important; /* Цвет текста при наведении */
     text-decoration: underline !important;
 }
 
-.nav-item-custom {  
+.nav-item-custom {
     padding: 5px 10px;
 }
 
 .header-logo {
-    height: 100px; 
-    width: auto; 
-    margin-right: 10px; 
+    height: 60px; /* Меньше высота логотипа для адаптивности */
+    width: auto;
+    margin-right: 10px;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .header-navbar {
+        padding: 0.5rem; /* Уменьшенный отступ для маленьких экранов */
+    }
+
+    .header-logo {
+        height: 40px; /* Логотип уменьшается еще больше на маленьких экранах */
+    }
+
+    .nav-link-custom {
+        font-size: 0.9rem; /* Уменьшенный размер текста в навигации */
+    }
+
+    .header-brand {
+        font-size: 1rem; /* Меньше размер текста бренда */
+    }
+}
+
+@media (max-width: 576px) {
+    .header-navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0.5rem;
+    }
+
+    .nav-link-custom {
+        font-size: 0.85rem;
+        padding: 0.25rem;
+    }
+
+    .nav-item-custom {
+        text-align: center;
+    }
 }

@@ -13,7 +13,6 @@ function App() {
     const [classrooms, setClassrooms] = useState<T_Classroom[]>([]);
     const [currentClassroom, setSelectedClassroom] = useState<T_Classroom | null>(null);
     const [isMock, setIsMock] = useState(false);
-    const [ClassroomName, setClassroomName] = useState<string>("");
 
     return (
         <div className="wrapper">
@@ -25,7 +24,7 @@ function App() {
                 <Row>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/classrooms/" element={<ClassroomsPage classrooms={classrooms} setClassrooms={setClassrooms} isMock={isMock} setIsMock={setIsMock} classroomName={ClassroomName} setClassroomName={setClassroomName}/>} />
+                        <Route path="/classrooms/" element={<ClassroomsPage classrooms={classrooms} setClassrooms={setClassrooms} isMock={isMock} setIsMock={setIsMock}/>} />
                         <Route path="/classrooms/:id" element={<ClassroomPage selectedClassroom={currentClassroom} setSelectedClassroom={setSelectedClassroom} isMock={isMock} setIsMock={setIsMock}/>} />
                     </Routes>
                 </Row>

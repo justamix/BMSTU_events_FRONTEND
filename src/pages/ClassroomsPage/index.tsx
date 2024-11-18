@@ -4,6 +4,9 @@ import ClassroomCard from "components/ClassroomCard";
 import { ClassroomMocks } from "src/modules/mocks.ts";
 import { FormEvent, useEffect } from "react";
 import * as React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "src/store"; // Убедитесь, что путь правильный
+import { setClassroomName } from "src/searchSlice"; // Импорт действия из searchSlice
 import './index.css'; // Импортируем стили
 
 type ClassroomsPageProps = {
@@ -11,11 +14,11 @@ type ClassroomsPageProps = {
     setClassrooms: React.Dispatch<React.SetStateAction<T_Classroom[]>>
     isMock: boolean,
     setIsMock: React.Dispatch<React.SetStateAction<boolean>>
-    classroomName: string,
-    setClassroomName: React.Dispatch<React.SetStateAction<string>>
 }
 
-const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock, classroomName, setClassroomName }: ClassroomsPageProps) => {
+const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock }: ClassroomsPageProps) => {
+    const classroomName = useSelector((state: RootState) => state.search.classroomName); // Получаем состояние из Redux
+    const dispatch = useDispatch();
 
     const fetchData = async () => {
         try {
@@ -26,12 +29,12 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock, classroo
         } catch {
             createMocks();
         }
-    }
+    };
 
     const createMocks = () => {
         setIsMock(true);
         setClassrooms(ClassroomMocks.filter(classroom => classroom.name.toLowerCase().includes(classroomName.toLowerCase())));
-    }
+    };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -40,11 +43,11 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock, classroo
         } else {
             await fetchData();
         }
-    }
+    };
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [classroomName]); // Перезапуск при изменении classroomName
 
     return (
         <Container className="container-custom">
@@ -53,7 +56,7 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock, classroo
                     <Form onSubmit={handleSubmit} className="d-flex">
                         <Input
                             value={classroomName}
-                            onChange={(e) => setClassroomName(e.target.value)}
+                            onChange={(e) => dispatch(setClassroomName(e.target.value))} // Обновляем состояние в Redux
                             placeholder="Поиск..."
                             className="me-2 search-input"
                         />
@@ -70,7 +73,7 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock, classroo
                     </Col>
                 ))}
             </Row>
-    </Container>
+        </Container>
     );
 };
 
