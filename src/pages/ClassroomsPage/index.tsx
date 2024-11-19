@@ -5,9 +5,9 @@ import { ClassroomMocks } from "src/modules/mocks.ts";
 import { FormEvent, useEffect } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "src/store"; // Убедитесь, что путь правильный
-import { setClassroomName } from "src/searchSlice"; // Импорт действия из searchSlice
-import './index.css'; // Импортируем стили
+import { RootState } from "src/store";
+import { setClassroomName } from "src/searchSlice";
+import './index.css'; 
 
 type ClassroomsPageProps = {
     classrooms: T_Classroom[],

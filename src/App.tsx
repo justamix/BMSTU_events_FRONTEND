@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "components/Header";
 import Breadcrumbs from "components/Breadcrumbs";
 import ClassroomPage from "pages/ClassroomPage";
@@ -13,6 +13,17 @@ function App() {
     const [classrooms, setClassrooms] = useState<T_Classroom[]>([]);
     const [currentClassroom, setSelectedClassroom] = useState<T_Classroom | null>(null);
     const [isMock, setIsMock] = useState(false);
+
+    useEffect(() => {
+        if ((window as any).__Tauri__?.tauri) {
+          const { invoke } = (window as any).__Tauri__.tauri;
+          invoke('create')
+            .then((response: any) => console.log(response))
+            .catch((error: any) => console.log(error));
+        } else {
+          console.error("Tauri не инициализирован.");
+        }
+      }, []);
 
     return (
         <div className="wrapper">
