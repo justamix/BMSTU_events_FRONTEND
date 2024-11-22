@@ -8,6 +8,7 @@ import { T_Classroom } from "src/modules/types.ts";
 import { Container, Row } from "reactstrap";
 import HomePage from "pages/HomePage";
 import "./App.css"; // Импорт вашего CSS
+import { invoke as tauriInvoke } from "@tauri-apps/api/core";
 
 function App() {
     const [classrooms, setClassrooms] = useState<T_Classroom[]>([]);
@@ -15,15 +16,16 @@ function App() {
     const [isMock, setIsMock] = useState(false);
 
     useEffect(() => {
-        if ((window as any).__Tauri__?.tauri) {
-          const { invoke } = (window as any).__Tauri__.tauri;
-          invoke('create')
-            .then((response: any) => console.log(response))
-            .catch((error: any) => console.log(error));
-        } else {
-          console.error("Tauri не инициализирован.");
-        }
-      }, []);
+        tauriInvoke('tauri', {cmd: 'create'})
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
+
+    return () => {
+        tauriInvoke('tauri', {cmd: 'close'})
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
+    }
+    }, []);
 
     return (
         <div className="wrapper">

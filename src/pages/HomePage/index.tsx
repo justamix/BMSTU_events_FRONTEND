@@ -8,19 +8,19 @@ const items = [
         src: "http://127.0.0.1:9000/bmstulab/ekaterina.png",
         altText: "Первый технический университет в России",
         caption: "Прообраз современного вуза, основан при Екатерине II",
-        fallbackSrc: "/FRONTEND/ekaterina.png"
+        fallbackSrc: "/ekaterina.png"
     },
     {
         src: "http://127.0.0.1:9000/bmstulab/mgtu.png",
         altText: "Здание выдержано в стиле ампира",
         caption: "Здание университета построено в стиле позднего московского ампира",
-        fallbackSrc: "/FRONTEND/mgtu.png"
+        fallbackSrc: "/mgtu.png"
     },
     {
         src: "http://127.0.0.1:9000/bmstulab/devs.png",
         altText: "Инновации и технологии",
         caption: "МГТУ им. Баумана — ведущий технический вуз в России, задающий тренды в науке и технологиях",
-        fallbackSrc: "/FRONTEND/devs.png"
+        fallbackSrc: "/devs.png"
     }
 ];
 

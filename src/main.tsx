@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
         v7_startTransition: true,
         v7_relativeSplatPath: true,
       }}
-      basename="/FRONTEND"
+      basename="/"
     >
       <App />
     </BrowserRouter>
@@ -22,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register('/FRONTEND/serviceWorker.js')
+      .register('/serviceWorker.js')
       .then((res) => console.log('Service Worker registered', res))
       .catch((err) => console.log('Service Worker not registered', err));
   });
