@@ -1,0 +1,22 @@
+.cart-page-container {
+    padding: 2rem 1rem;
+  }
+  
+  .cart-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cart-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  

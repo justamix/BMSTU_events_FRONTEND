@@ -41,3 +41,37 @@
     border: #000000;
     border-radius: 15px !important;
 }
+/* Стиль для кнопки "Добавить в корзину" */
+.add-to-cart-button {
+    background-color: #007bff; /* Синий фон */
+    color: #fff; /* Белый текст */
+    border: none; /* Без рамки */
+    padding: 10px 20px; /* Отступы */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 15px !important; /* Закругленные углы */
+    transition: background-color 0.3s, transform 0.2s; /* Плавный переход */
+    cursor: pointer; /* Курсор в виде указателя */
+    margin-top: 10px !important; /* Отступ сверху */
+    text-align: center; /* Выравнивание текста по центру */
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
+    transform: translateY(-3px); /* Легкий подъем кнопки при наведении */
+  }
+  
+  .add-to-cart-button:active {
+    background-color: #004085; /* Цвет фона при нажатии */
+    transform: translateY(1px); /* Легкое смещение при нажатии */
+  }
+  
+  .add-to-cart-button:focus {
+    outline: none; /* Убираем обводку при фокусе */
+  }
+  
+  .add-to-cart-button:disabled {
+    background-color: #c6c6c6; /* Серый фон для отключенной кнопки */
+    color: #808080; /* Серый текст */
+    cursor: not-allowed; /* Курсор в виде крестика */
+  }

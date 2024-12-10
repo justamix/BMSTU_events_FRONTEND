@@ -1,0 +1,72 @@
+.main-profile-div {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.profile-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-info, .orders-table {
+  margin: 20px auto;
+  width: 80%;
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info .label {
+  font-weight: bold;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-button, .logout-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover, .logout-button:hover {
+  background-color: #0056b3;
+}
+
+.orders-title {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.orders-table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.view-order-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-order-button:hover {
+  background-color: #218838;
+}

@@ -1,0 +1,38 @@
+.cart-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.cart-card-body {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.cart-card-image {
+  width: 80px; /* Ширина маленького фото */
+  height: 80px; /* Высота маленького фото */
+  border-radius: 4px;
+  margin-right: 16px; /* Отступ справа */
+  object-fit: cover; /* Масштабирование изображения */
+}
+
+.cart-card-content {
+  flex: 1; /* Занять оставшееся пространство */
+}
+
+.cart-card-title {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.cart-card-text {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.cart-delete-button {
+  margin-left: 16px;
+}
