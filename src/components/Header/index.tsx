@@ -42,7 +42,7 @@ const Header: React.FC = () => {
         {cookie ? (
           <>
             <NavItem className="nav-item-custom">
-              <NavLink tag={RRNavLink} to="/profile" className="nav-link-custom">
+              <NavLink tag={RRNavLink} to="/my_events" className="nav-link-custom">
                 <span className="nav-link-custom">{"Мои мероприятия"}</span>
               </NavLink>
             </NavItem>

@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Table, Button, Input, Form, FormGroup, Label } from "reactstrap";
+import { Container, Table } from "reactstrap";
 import { api } from "src/api"; // Ваши API-запросы
+import { parseISO, format } from "date-fns"; // Импортируем нужные функции из date-fns
 import "./index.css";
 
 interface Event {
   id: number;
   status: string;
   created_at: string;
-  formed_at: string;
-  completed_at: string;
-  number: string;
+  submitted_at: string;
+  completed_at: string | null;
+  classrooms: Array<any>; // Массив аудиторий
 }
 
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]); // Список мероприятий
-  const [statusFilter, setStatusFilter] = useState<string>("0"); // Фильтр по статусу
-  const [dateStart, setDateStart] = useState<string>(""); // Фильтр начала даты
-  const [dateEnd, setDateEnd] = useState<string>(""); // Фильтр конца даты
   const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
   const [error, setError] = useState<string | null>(null); // Состояние ошибок
 
@@ -25,11 +23,7 @@ const EventsPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await api.events.eventsSearchList({
-        status: statusFilter,
-        date_formation_start: dateStart,
-        date_formation_end: dateEnd,
-      });
+      const response = await api.events.eventsSearchList();
 
       if (response.status === 200) {
         setEvents(response.data);
@@ -44,15 +38,9 @@ const EventsPage: React.FC = () => {
     }
   };
 
-  // Загрузка данных при изменении фильтров
   useEffect(() => {
     fetchEvents();
-  }, [statusFilter, dateStart, dateEnd]);
-
-  const handleFilterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchEvents();
-  };
+  }, []);
 
   return (
     <Container>
@@ -70,7 +58,7 @@ const EventsPage: React.FC = () => {
               <th>Дата создания</th>
               <th>Дата формирования</th>
               <th>Дата завершения</th>
-              <th>Номер</th>
+              <th>Количество аудиторий</th>
             </tr>
           </thead>
           <tbody>
@@ -78,10 +66,22 @@ const EventsPage: React.FC = () => {
               <tr key={event.id}>
                 <td>{index + 1}</td>
                 <td>{event.status}</td>
-                <td>{new Date(event.created_at).toLocaleString()}</td>
-                <td>{new Date(event.formed_at).toLocaleString()}</td>
-                <td>{event.completed_at ? new Date(event.completed_at).toLocaleString() : "-"}</td>
-                <td>{event.number}</td>
+                <td>
+                  {event.created_at
+                    ? format(parseISO(event.created_at), "dd.MM.yyyy HH:mm:ss")
+                    : "-"}
+                </td>
+                <td>
+                  {event.submitted_at
+                    ? format(parseISO(event.submitted_at), "dd.MM.yyyy HH:mm:ss")
+                    : "-"}
+                </td>
+                <td>
+                  {event.completed_at
+                    ? format(parseISO(event.completed_at), "dd.MM.yyyy HH:mm:ss")
+                    : "-"}
+                </td>
+                <td>{event.classrooms.length}</td> {/* Используем длину массива classrooms */}
               </tr>
             ))}
           </tbody>
