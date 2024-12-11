@@ -22,7 +22,7 @@ const ClassroomsPage = ({ classrooms, setClassrooms, isMock, setIsMock }: Classr
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/classrooms/search?name=${classroomName}`, { signal: AbortSignal.timeout(1000) });
+            const response = await fetch(`http://localhost:8000/api/classrooms/search?name=${classroomName}`);
             const data = await response.json();
             setClassrooms(data.classrooms);
             setIsMock(false);

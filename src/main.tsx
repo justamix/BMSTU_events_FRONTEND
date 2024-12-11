@@ -7,23 +7,8 @@ import { store } from './store'; // Импортируем ваш store
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}> {/* Оборачиваем Provider */}
-    <BrowserRouter
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-      basename="/"
-    >
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </Provider>
 );
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker
-      .register('/serviceWorker.js')
-      .then((res) => console.log('Service Worker registered', res))
-      .catch((err) => console.log('Service Worker not registered', err));
-  });
-}

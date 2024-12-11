@@ -18,7 +18,7 @@ const ClassroomPage = ({selectedClassroom, setSelectedClassroom, isMock, setIsMo
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/classrooms/${id}`,{ signal: AbortSignal.timeout(1000) })
+            const response = await fetch(`http://localhost:8000/api/classrooms/${id}`,{ signal: AbortSignal.timeout(1000) })
             const data = await response.json()
             setSelectedClassroom(data)
         } catch {
