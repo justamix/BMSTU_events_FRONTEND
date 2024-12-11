@@ -16,27 +16,25 @@ const CartPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleDeleteFromCart = async (classroomId: number) => {
-    try {
-      const response = await api.events.eventsDeleteClassroomDelete(
-        String(eventId),
-        String(classroomId)
-      );
+    // try {
+    //   const response = await api.events.eventsDeleteClassroomDelete(
+    //     String(eventId),
+    //     String(classroomId)
+    //   );
 
-      if (response.status === 204) {
-        console.log("Удаление из API успешно, удаляем из Redux");
-        dispatch(removeCartItem(classroomId));
+    //   if (response.status === 204) {
+    //     console.log("Удаление из API успешно, удаляем из Redux");
+    //     dispatch(removeCartItem(classroomId));
 
-        if (cartItems.length === 1) {
-          dispatch(resetCartCount());
-          navigate("/classrooms");
-        }
-      } else {
-        setError("Ошибка при удалении аудитории из корзины.");
-      }
-    } catch (err) {
-      console.error("Ошибка при удалении аудитории:", err);
-      setError("Ошибка при удалении аудитории из корзины.");
-    }
+    //     if (cartItems.length === 1) {
+    //       dispatch(resetCartCount());
+    //       navigate("/classrooms");
+    //     }
+    //   } else {
+    //   }
+    // } catch (err) {
+    //   console.error("Ошибка при удалении аудитории:", err);
+    // }
   };
 
   const handleSubmitOrder = async () => {
