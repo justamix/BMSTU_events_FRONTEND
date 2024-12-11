@@ -1,14 +1,18 @@
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from 'react-redux'; // Импортируем Provider
-import { store } from './store'; // Импортируем ваш store
+import {BrowserRouter} from "react-router-dom";
+import { Provider } from 'react-redux'; 
+import { store } from './store'; 
 
-createRoot(document.getElementById('root')!).render(
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}> {/* Оборачиваем Provider */}
-    <BrowserRouter>
-      <App />
+    <BrowserRouter future={{
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    }} basename="/">
+          <App />
     </BrowserRouter>
   </Provider>
-);
+)
