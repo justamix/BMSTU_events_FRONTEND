@@ -3,70 +3,53 @@ import { Container, Row, Col, Button } from "reactstrap";
 import CartClassroomCard from "components/CartClassroomCard";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "src/store";
-import { removeCartItem, resetCartCount } from "src/slices/cartSlice"; // Actions
+import { resetCartCount } from "src/slices/cartSlice"; // Actions
 import { useNavigate } from "react-router-dom";
-import { api } from "src/api"; // Ваши API-запросы
+import { deleteCart, submitOrder } from "src/thunks/cartThunks";
 import "./index.css";
 
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.classrooms_count.cartItems);
   const eventId = useSelector((state: RootState) => state.classrooms_count.draftId);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>(); // Типизируем Dispatch для Thunk
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
-  const handleDeleteFromCart = async (classroomId: number) => {
-    // try {
-    //   const response = await api.events.eventsDeleteClassroomDelete(
-    //     String(eventId),
-    //     String(classroomId)
-    //   );
-
-    //   if (response.status === 204) {
-    //     console.log("Удаление из API успешно, удаляем из Redux");
-    //     dispatch(removeCartItem(classroomId));
-
+  const handleDeleteFromCart = (classroomId: number) => {
+    // dispatch(deleteClassroomFromCart({ eventId: Number(eventId), classroomId }))
+    //   .unwrap()
+    //   .then(() => {
     //     if (cartItems.length === 1) {
     //       dispatch(resetCartCount());
     //       navigate("/classrooms");
     //     }
-    //   } else {
-    //   }
-    // } catch (err) {
-    //   console.error("Ошибка при удалении аудитории:", err);
-    // }
+    //   })
+    //   .catch((err) => {
+    //     setError(err);
+    //   });
   };
 
-  const handleSubmitOrder = async () => {
-    try {
-      const response = await api.events.eventsUpdateStatusUserUpdate(eventId); // Вызов метода update_status_user
-      if (response.status === 200) {
-        console.log("Заказ оформлен успешно");
+  const handleSubmitOrder = () => {
+    dispatch(submitOrder({ eventId: Number(eventId) }))
+      .unwrap()
+      .then(() => {
         alert("Ваш заказ успешно оформлен!");
         navigate("/classrooms");
-      } else {
-        setError("Ошибка при оформлении заказа.");
-      }
-    } catch (err) {
-      console.error("Ошибка при оформлении заказа:", err);
-      setError("Ошибка при оформлении заказа.");
-    }
+      })
+      .catch((err) => {
+        setError(err);
+      });
   };
 
-  const handleDeleteCart = async () => {
-    try {
-      const response = await api.events.eventsDeleteDelete(eventId); // Вызов метода delete_event
-      if (response.status === 200) {
-        console.log("Корзина удалена успешно");
-        dispatch(resetCartCount()); // Сбрасываем состояние корзины
-        navigate("/classrooms"); // Перенаправляем на страницу аудиторий
-      } else {
-        setError("Ошибка при удалении корзины.");
-      }
-    } catch (err) {
-      console.error("Ошибка при удалении корзины:", err);
-      setError("Ошибка при удалении корзины.");
-    }
+  const handleDeleteCart = () => {
+    dispatch(deleteCart({ eventId: Number(eventId) }))
+      .unwrap()
+      .then(() => {
+        navigate("/classrooms");
+      })
+      .catch((err) => {
+        setError(err);
+      });
   };
 
   useEffect(() => {
@@ -86,7 +69,7 @@ const CartPage: React.FC = () => {
           <Col key={item.classroom_id} xs="12" className="mb-3">
             <CartClassroomCard
               classroomId={item.classroom_id}
-              eventId={eventId!}
+              eventId={Number(eventId)!}
               name={item.name}
               address={item.address}
               photoUrl={item.url}

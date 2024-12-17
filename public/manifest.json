@@ -1,7 +1,7 @@
 {
     "name": "Tile Notes",
     "short_name": "Tile Notes",
-    "start_url": "/FRONTEND/",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#fdfdfd",
     "theme_color": "#ffffff",

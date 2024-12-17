@@ -1,9 +1,8 @@
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { api } from "src/api"; // Your API file
-import { useState } from "react";
-import { setCartCount, removeCartItem } from "src/slices/cartSlice"; // Добавляем `removeCartItem`
-import "./index.css"; // Custom styles
+import { useDispatch } from "react-redux";
+import { deleteClassroomFromCart } from "src/thunks/cartThunks";
+import { AppDispatch } from "src/store";
+import "./index.css";
 
 interface CartClassroomCardProps {
   classroomId: number;
@@ -22,63 +21,27 @@ const CartClassroomCard = ({
   photoUrl,
   onDelete,
 }: CartClassroomCardProps) => {
-  const dispatch = useDispatch();
-  const cartCount = useSelector((state: any) => state.classrooms_count.classroomsCount);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleDelete = async () => {
-    try {
-      const classroomIdStr = String(classroomId);
-      const eventIdStr = String(eventId);
-
-      // Отправляем запрос на сервер для удаления
-      const response = await api.events.eventsDeleteClassroomDelete(eventIdStr, classroomIdStr);
-
-      if (response.status === 200 || response.status === 204) {
-        setError(null); // Сбрасываем ошибки
-
-        // Уменьшаем счетчик корзины в Redux
-        dispatch(setCartCount(cartCount - 1));
-
-        // Удаляем аудиторию из глобального состояния Redux
-        dispatch(removeCartItem(classroomId!));
-
-        // Удаляем карточку из локального состояния
-        onDelete(classroomId);
-      } else {
-        setError("Ошибка при удалении аудитории из корзины.");
-      }
-    } catch (err) {
-      console.error("Ошибка при удалении аудитории:", err);
-      setError("Ошибка при удалении аудитории из корзины.");
-    }
+  const handleDelete = () => {
+    dispatch(deleteClassroomFromCart({ eventId, classroomId }))
+      .unwrap()
+      .then(() => onDelete(classroomId))
+      .catch((err) => console.error(err));
   };
 
   return (
     <Card className="cart-card">
       <CardBody className="cart-card-body d-flex align-items-center">
-        {/* Фото слева */}
-        {photoUrl && (
-          <img
-            src={photoUrl}
-            alt={`Фотография аудитории ${name}`}
-            className="cart-card-image"
-          />
-        )}
-        {/* Контент карточки */}
+        {photoUrl && <img src={photoUrl} alt={name} className="cart-card-image" />}
         <div className="cart-card-content">
-          <CardTitle tag="h5" className="cart-card-title">
-            {name}
-          </CardTitle>
-          <CardText className="cart-card-text">{address}</CardText>
+          <CardTitle tag="h5">{name}</CardTitle>
+          <CardText>{address}</CardText>
         </div>
-        {/* Кнопка удаления */}
-        <Button color="danger" className="cart-delete-button" onClick={handleDelete}>
+        <Button color="danger" onClick={handleDelete}>
           Удалить
         </Button>
       </CardBody>
-
-      {error && <div className="error-message">{error}</div>}
     </Card>
   );
 };

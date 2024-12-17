@@ -6,3 +6,11 @@ export type T_Classroom = {
     url: string,
     status: number
 }
+export interface User {
+    id?: number; // Делает поле необязательным
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    date_joined: string;
+  }

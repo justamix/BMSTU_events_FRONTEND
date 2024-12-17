@@ -607,9 +607,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/users/login/`,
         method: "POST",
         body: data,
-        secure: true,
         type: ContentType.Json,
         format: "json",
+        credentials: "include", // Включаем отправку куки
         ...params,
       }),
 

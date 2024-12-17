@@ -1,30 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delCookie } from "src/slices/cookieSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar, NavItem, NavLink } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
 import logo from "assets/logo.png";
-import { RootState } from "src/store"; // Импортируйте RootState для типизации
+import { RootState } from "src/store"; // Импортируем RootState для типизации
 import "./index.css";
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState<string | null>(null);
-  const { cookie } = useSelector((state: any) => state.cookie); // Считываем состояние из Redux
 
-  // Получаем количество аудиторий в корзине
+  // Извлекаем данные из Redux Store
+  const { cookie } = useSelector((state: RootState) => state.cookie); // Состояние cookie
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.user); // Данные о пользователе
   const classroomsCount = useSelector((state: RootState) => state.classrooms_count.classroomsCount);
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-  }, [cookie, classroomsCount]); // Перерендеринг при изменении cookie и числа аудиторий в корзине 
 
   const handleLogout = () => {
     dispatch(delCookie());
-    localStorage.removeItem("username");
     navigate("/login");
   };
 
@@ -39,23 +33,21 @@ const Header: React.FC = () => {
             Аудитории
           </NavLink>
         </NavItem>
-        {cookie ? (
+        {isAuthenticated || cookie ? (
           <>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/my_events" className="nav-link-custom">
-                <span className="nav-link-custom">{"Мои мероприятия"}</span>
+                Мои мероприятия
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/profile" className="nav-link-custom">
-                <span className="nav-link-custom">{username || "пользователь"}</span>
+                {user?.username || "пользователь"}
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/draft_event" className="nav-link-custom">
-                <span className="nav-link-custom">
-                  Корзина ({classroomsCount}) {/* Отображаем количество аудиторий */}
-                </span>
+                Корзина ({classroomsCount})
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">

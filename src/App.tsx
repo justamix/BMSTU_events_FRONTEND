@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "components/Header";
 import Breadcrumbs from "components/Breadcrumbs";
 import ClassroomPage from "pages/ClassroomPage";
@@ -15,10 +15,22 @@ import RegisterPage from "./pages/regPage";
 import EditProfile from "./pages/profilePage";
 import CartPage from "./pages/Cart";
 import EventsPage from "./pages/eventsPage";
+import { invoke as tauriInvoke } from "@tauri-apps/api/core";
+
 function App() {
     const [currentClassroom, setSelectedClassroom] = useState<T_Classroom | null>(null);
     const [isMock, setIsMock] = useState(false);
+    useEffect(() => {
+        tauriInvoke('tauri', {cmd: 'create'})
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
 
+    return () => {
+        tauriInvoke('tauri', {cmd: 'close'})
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
+    }
+    }, []);
     return (
         <div className="wrapper">
             {<Header />}

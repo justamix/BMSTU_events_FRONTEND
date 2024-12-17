@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table } from "reactstrap";
-import { api } from "src/api"; // Ваши API-запросы
-import { parseISO, format } from "date-fns"; // Импортируем нужные функции из date-fns
+import { parseISO, format } from "date-fns";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store";
+import { fetchEvents } from "src/thunks/eventThunks";
 import "./index.css";
 
 interface Event {
@@ -10,37 +12,38 @@ interface Event {
   created_at: string;
   submitted_at: string;
   completed_at: string | null;
-  classrooms: Array<any>; // Массив аудиторий
+  classrooms: Array<any>;
 }
 
 const EventsPage: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([]); // Список мероприятий
-  const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
-  const [error, setError] = useState<string | null>(null); // Состояние ошибок
+  const dispatch = useDispatch<AppDispatch>();
 
-  const fetchEvents = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await api.events.eventsSearchList();
-
-      if (response.status === 200) {
-        setEvents(response.data);
-      } else {
-        setError("Ошибка при загрузке мероприятий");
-      }
-    } catch (err) {
-      console.error("Ошибка при загрузке мероприятий:", err);
-      setError("Ошибка при загрузке мероприятий");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    const loadEvents = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const resultAction = await dispatch(fetchEvents());
+        if (fetchEvents.fulfilled.match(resultAction)) {
+          setEvents(resultAction.payload); // Используем результат thunk локально
+        } else {
+          setError(resultAction.payload as string);
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки мероприятий:", err);
+        setError("Ошибка при загрузке мероприятий.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, [dispatch]);
 
   return (
     <Container>
@@ -81,7 +84,7 @@ const EventsPage: React.FC = () => {
                     ? format(parseISO(event.completed_at), "dd.MM.yyyy HH:mm:ss")
                     : "-"}
                 </td>
-                <td>{event.classrooms.length}</td> {/* Используем длину массива classrooms */}
+                <td>{event.classrooms.length}</td>
               </tr>
             ))}
           </tbody>

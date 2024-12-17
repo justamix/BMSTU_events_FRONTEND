@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchClassrooms } from "src/thunks/classroomsThunk";
+
 interface CartClassroom {
   classroom_id: number;
   name: string;
@@ -7,15 +9,22 @@ interface CartClassroom {
 
 interface CartState {
   classroomsCount: number;
-  draftId: string | null; // ID черновика
-  cartItems: CartClassroom[]; // Список элементов корзины
+  draftId: string | null;
+  cartItems: CartClassroom[];
+  classrooms: CartClassroom[]; // Список всех аудиторий
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: CartState = {
   classroomsCount: 0,
   draftId: null,
-  cartItems: [], // Изначально корзина пуста
+  cartItems: [],
+  classrooms: [],
+  loading: false,
+  error: null,
 };
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -26,30 +35,38 @@ const cartSlice = createSlice({
     resetCartCount: (state) => {
       state.classroomsCount = 0;
       state.draftId = null;
-      state.cartItems = []; // Сбрасываем корзину
+      state.cartItems = [];
     },
     setDraftId: (state, action: PayloadAction<string>) => {
       state.draftId = action.payload;
     },
     setCartItems: (state, action: PayloadAction<CartClassroom[]>) => {
-      state.cartItems = action.payload; // Устанавливаем элементы корзины
+      state.cartItems = action.payload;
     },
     removeCartItem(state, action: PayloadAction<number>) {
-      console.log("Удаление элемента с ID:", action.payload);
-      console.log("Состояние до удаления:", state.cartItems);
       state.cartItems = state.cartItems.filter(
         (item) => item.classroom_id !== action.payload
       );
-      console.log("Состояние после удаления:", state.cartItems);
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchClassrooms.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchClassrooms.fulfilled, (state, action) => {
+        state.loading = false;
+        state.classrooms = action.payload; // Сохраняем аудиторий
+      })
+      .addCase(fetchClassrooms.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
-export const {
-  setCartCount,
-  resetCartCount,
-  setDraftId,
-  setCartItems,
-  removeCartItem,
-} = cartSlice.actions;
+export const { setCartCount, resetCartCount, setDraftId, setCartItems, removeCartItem } =
+  cartSlice.actions;
+
 export default cartSlice.reducer;
