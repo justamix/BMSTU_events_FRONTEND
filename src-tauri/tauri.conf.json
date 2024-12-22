@@ -5,7 +5,7 @@
   "identifier": "com.mgtu.frontend", 
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:3000",
+    "devUrl": "http://192.168.68.107:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
