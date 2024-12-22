@@ -13,15 +13,15 @@ export const loginUser = createAsyncThunk(
       if (response.status === 200 || response.status === 201) {
         const data = response.data;
 
-        alert(data);
-        alert(document.cookie);
+        //alert(data);
+        //alert(document.cookie);
         // Получаем session_id из cookies
         const sessionId = document.cookie
           .split("; ")
           .find((row) => row.startsWith("session_id="))
           ?.split("=")[1];
 
-        alert(sessionId);
+        // alert(sessionId);
 
         if (sessionId) {
           dispatch(setCookie(sessionId)); // Сохранение session_id в Redux

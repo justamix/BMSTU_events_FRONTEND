@@ -7,7 +7,16 @@ import { NavLink as RRNavLink } from "react-router-dom";
 import logo from "assets/logo.png";
 import { RootState } from "src/store"; // Импортируем RootState для типизации
 import "./index.css";
+import { logoutUser } from "src/slices/userSlice";
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +28,7 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(delCookie());
+    dispatch(logoutUser())
     navigate("/login");
   };
 
@@ -41,9 +51,13 @@ const Header: React.FC = () => {
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
-              <NavLink tag={RRNavLink} to="/profile" className="nav-link-custom">
-                {user?.username || "пользователь"}
-              </NavLink>
+            <NavLink 
+                        tag={RRNavLink} 
+                        to="/profile" 
+                        style={{ color: getRandomColor() }} 
+                    >
+                        {user?.username || "пользователь"}
+                    </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/draft_event" className="nav-link-custom">
