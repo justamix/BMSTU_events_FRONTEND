@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "src/store";
 import { setClassroomName } from "src/searchSlice";
 import { fetchClassrooms } from "src/thunks/classroomsThunk";
+import { changeColor } from "src/slices/userSlice";
 import "./index.css";
 
 const ClassroomsPage: React.FC = () => {
@@ -15,6 +16,7 @@ const ClassroomsPage: React.FC = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(fetchClassrooms(classroomName)); // Вызываем Thunk
+    dispatch(changeColor());
   };
 
   useEffect(() => {

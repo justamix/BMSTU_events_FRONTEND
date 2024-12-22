@@ -9,26 +9,18 @@ import { RootState } from "src/store"; // Импортируем RootState дл�
 import "./index.css";
 import { logoutUser } from "src/slices/userSlice";
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Извлекаем данные из Redux Store
-  const { cookie } = useSelector((state: RootState) => state.cookie); // Состояние cookie
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.user); // Данные о пользователе
-  const classroomsCount = useSelector((state: RootState) => state.classrooms_count.classroomsCount);
+  const { user, isAuthenticated, color } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const handleLogout = () => {
     dispatch(delCookie());
-    dispatch(logoutUser())
+    dispatch(logoutUser());
     navigate("/login");
   };
 
@@ -43,7 +35,7 @@ const Header: React.FC = () => {
             Аудитории
           </NavLink>
         </NavItem>
-        {isAuthenticated || cookie ? (
+        {isAuthenticated ? (
           <>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/my_events" className="nav-link-custom">
@@ -51,17 +43,17 @@ const Header: React.FC = () => {
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
-            <NavLink 
-                        tag={RRNavLink} 
-                        to="/profile" 
-                        style={{ color: getRandomColor() }} 
-                    >
-                        {user?.username || "пользователь"}
-                    </NavLink>
+              <NavLink
+                tag={RRNavLink}
+                to="/profile"
+                style={{ color: color }} // Используем цвет из состояния
+              >
+                {user?.username || "пользователь"}
+              </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/draft_event" className="nav-link-custom">
-                Корзина ({classroomsCount})
+                Корзина
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
@@ -81,5 +73,4 @@ const Header: React.FC = () => {
     </Navbar>
   );
 };
-
 export default Header;
