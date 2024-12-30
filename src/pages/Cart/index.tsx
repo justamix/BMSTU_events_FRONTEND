@@ -3,77 +3,93 @@ import { Container, Row, Col, Button } from "reactstrap";
 import CartClassroomCard from "components/CartClassroomCard";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "src/store";
-import { resetCartCount } from "src/slices/cartSlice"; // Actions
 import { useNavigate } from "react-router-dom";
-import { deleteCart, submitOrder } from "src/thunks/cartThunks";
+import { api } from "src/api";
 import "./index.css";
 
+interface Classroom {
+  classroom_id: number;
+  name: string;
+  address: string;
+  url?: string;
+}
+
 const CartPage: React.FC = () => {
-  const cartItems = useSelector((state: RootState) => state.classrooms_count.cartItems);
-  const eventId = useSelector((state: RootState) => state.classrooms_count.draftId);
-  const dispatch = useDispatch<any>(); // Типизируем Dispatch для Thunk
-  const navigate = useNavigate();
+  const eventId = useSelector((state: RootState) => state.classrooms_count.draftId); // Получаем eventId из Redux
+  const [cartItems, setCartItems] = useState<Classroom[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const handleDeleteFromCart = (classroomId: number) => {
-    // dispatch(deleteClassroomFromCart({ eventId: Number(eventId), classroomId }))
-    //   .unwrap()
-    //   .then(() => {
-    //     if (cartItems.length === 1) {
-    //       dispatch(resetCartCount());
-    //       navigate("/classrooms");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setError(err);
-    //   });
-  };
-
-  const handleSubmitOrder = () => {
-    dispatch(submitOrder({ eventId: Number(eventId) }))
-      .unwrap()
-      .then(() => {
-        alert("Ваш заказ успешно оформлен!");
-        navigate("/classrooms");
-      })
-      .catch((err) => {
-        setError(err);
-      });
-  };
-
-  const handleDeleteCart = () => {
-    dispatch(deleteCart({ eventId: Number(eventId) }))
-      .unwrap()
-      .then(() => {
-        navigate("/classrooms");
-      })
-      .catch((err) => {
-        setError(err);
-      });
-  };
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const classroomsCount = useSelector(
+    (state: RootState) => state.classrooms_count.classroomsCount
+  );
   useEffect(() => {
-    if (cartItems.length === 0) {
+    const fetchCartData = async () => {
+      if (!eventId) {
+        setError("Не найден идентификатор события.");
+        navigate("/classrooms"); // Переадресация, если eventId отсутствует
+        return;
+      }
+      if (!classroomsCount) {
+        setError("Не найден идентификатор события.");
+        navigate("/classrooms"); // Переадресация, если eventId отсутствует
+        return;
+      }
+      try {
+        const response = await api.events.eventsRead(String(eventId));
+        if (response.data.classrooms.length === 0) {
+          navigate("/classrooms"); // Переадресация, если корзина пустая
+        } else {
+          setCartItems(response.data.classrooms || []);
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки данных корзины:", err);
+        setError("Не удалось загрузить данные корзины.");
+        navigate("/classrooms"); // Переадресация при ошибке загрузки
+      }
+    };
+
+    fetchCartData();
+  }, [eventId, navigate, classroomsCount]);
+
+  const handleSubmitOrder = async () => {
+    try {
+      alert("Ваш заказ успешно оформлен!");
       navigate("/classrooms");
+    } catch (err) {
+      setError("Ошибка при оформлении заказа.");
     }
-  }, [cartItems, navigate]);
+  };
+
+  const handleDeleteCart = async () => {
+    try {
+      const response = await api.events.eventsDeleteDelete(String(eventId));
+      if (response.status === 200) {
+        navigate("/classrooms");} // Переадресация, если корзина пустая
+    } catch (err) {
+      setError("Ошибка при удалении корзины.");
+    }
+  };
 
   return (
     <Container className="cart-page-container">
       <h1 className="cart-title">Моя корзина</h1>
 
-      {cartItems.length === 0 && <p>Корзина пуста.</p>}
+      {error && <div className="error-message">{error}</div>}
+      {cartItems.length === 0 && !error && <p>Корзина пуста.</p>}
 
       <Row>
         {cartItems.map((item) => (
           <Col key={item.classroom_id} xs="12" className="mb-3">
             <CartClassroomCard
               classroomId={item.classroom_id}
-              eventId={Number(eventId)!}
+              eventId={parseInt(eventId!)}
               name={item.name}
               address={item.address}
               photoUrl={item.url}
-              onDelete={handleDeleteFromCart}
+              onDelete={() => {
+                setCartItems(cartItems.filter((cart) => cart.classroom_id !== item.classroom_id));
+              }}
             />
           </Col>
         ))}
@@ -89,8 +105,6 @@ const CartPage: React.FC = () => {
           </Button>
         </div>
       )}
-
-      {error && <div className="error-message mt-3">{error}</div>}
     </Container>
   );
 };

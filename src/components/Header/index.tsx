@@ -1,21 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delCookie } from "src/slices/cookieSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar, NavItem, NavLink } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
 import logo from "assets/logo.png";
-import { RootState } from "src/store"; // Импортируем RootState для типизации
+import { RootState } from "src/store"; 
 import "./index.css";
 import { logoutUser } from "src/slices/userSlice";
-
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  // Данные из Redux Store
   const { user, isAuthenticated, color } = useSelector(
     (state: RootState) => state.user
+  );
+  const classroomsCount = useSelector(
+    (state: RootState) => state.classrooms_count.classroomsCount
   );
 
   const handleLogout = () => {
@@ -52,9 +54,15 @@ const Header: React.FC = () => {
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">
-              <NavLink tag={RRNavLink} to="/draft_event" className="nav-link-custom">
-                Корзина
-              </NavLink>
+              {classroomsCount > 0 ? (
+                <NavLink tag={RRNavLink} to="/draft_event" className="nav-link-custom">
+                  Корзина ({classroomsCount})
+                </NavLink>
+              ) : (
+                <span className="nav-link-custom disabled" style={{ cursor: "not-allowed", color: "#6c757d" }}>
+                  Корзина ({classroomsCount})
+                </span>
+              )}
             </NavItem>
             <NavItem className="nav-item-custom">
               <Button color="link" onClick={handleLogout} className="nav-link-custom">
@@ -73,4 +81,5 @@ const Header: React.FC = () => {
     </Navbar>
   );
 };
+
 export default Header;

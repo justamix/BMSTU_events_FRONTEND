@@ -7,10 +7,9 @@ interface UserState {
     first_name: string;
     last_name: string;
     date_joined: Date;
-    // Дополнительные поля, которые есть в UserSerializer
   } | null;
   isAuthenticated: boolean;
-  color: string; // Новый параметр для цвета
+  color: string; 
 }
 
 const initialState: UserState = {
