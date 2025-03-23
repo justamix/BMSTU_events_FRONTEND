@@ -7,3 +7,6 @@ BACKEND:
 ЛР3 - https://github.com/justamix/BACKEND/tree/api
 
 ЛР4 - https://github.com/justamix/BACKEND/tree/SWAGGER
+
+Отчет:
+https://docs.google.com/document/d/1ILiLpwSMCFhk_D0bWVF2IiYQRZZE-QTEwh33JgZjiQU/edit?usp=sharing
